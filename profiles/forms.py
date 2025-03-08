@@ -19,7 +19,10 @@ class UserProfileForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        self.fields["user"].widget = forms.HiddenInput()
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if request and not request.user.is_superuser:
+            self.fields["user"].widget = forms.HiddenInput()
 
 
 class UserRegistrationForm(UserCreationForm):
