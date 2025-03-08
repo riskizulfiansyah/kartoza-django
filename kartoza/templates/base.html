@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     {% block head %}
     {% endblock %}
+    {% load leaflet_tags %}
+    {% leaflet_css %}
+    {% leaflet_js %}
 </head>
 <body>
     {% block content %}

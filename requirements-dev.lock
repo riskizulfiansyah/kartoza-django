@@ -13,6 +13,9 @@
 asgiref==3.8.1
     # via django
 django==5.1.7
+    # via django-leaflet
+    # via kartoza-django
+django-leaflet==0.31.0
     # via kartoza-django
 psycopg2-binary==2.9.10
     # via kartoza-django
