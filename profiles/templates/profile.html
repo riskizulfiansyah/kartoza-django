@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container profile-container">
+    <h1>{{ profile.user.username }}'s Profile</h1>
+    <p>City: {{ profile.location.x }}</p>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="logout" type="submit">Logout</button>
+    </form>
+</div>
+{% endblock %}
