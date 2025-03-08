@@ -16,6 +16,7 @@ class UserProfileForm(forms.ModelForm):
             "postal_code",
             "country",
             "phone_number",
+            "location",
         ]
 
     def __init__(self, *args, **kwargs):

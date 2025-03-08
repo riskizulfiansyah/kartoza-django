@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "profiles",
+    "django.contrib.gis",
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ WSGI_APPLICATION = "kartoza.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": os.getenv("DB_NAME"),
         "USER": os.getenv("DB_USER"),
         "PASSWORD": os.getenv("DB_PASSWORD"),
@@ -143,3 +144,13 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "profile"
+
+GDAL_LIBRARY_PATH = os.getenv(
+    "GDAL_LIBRARY_PATH",
+    "/opt/homebrew/Cellar/gdal/3.10.2_2/lib/libgdal.36.3.10.2.dylib",
+)
+
+GEOS_LIBRARY_PATH = os.getenv(
+    "GEOS_LIBRARY_PATH",
+    "/opt/homebrew/Cellar/geos/3.11.2_1/lib/libgeos_c.1.dylib",
+)
