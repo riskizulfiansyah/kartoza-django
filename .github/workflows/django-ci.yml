@@ -1,0 +1,58 @@
+name: Django CI
+
+on:
+  pull_request:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_user -d test_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Rye
+        run: |
+          curl -sSf https://rye-up.com/get | bash
+          echo "$HOME/.rye/bin" >> $GITHUB_PATH
+          rye self update
+
+      - name: Install dependencies
+        run: |
+          rye sync
+
+      - name: Set up environment variables
+        run: |
+          echo "DEBUG=False" >> .env
+          echo "DATABASE_URL=postgres://test_user:test_password@localhost:5432/test_db" >> .env
+
+      - name: Run Migrations
+        run: rye run python manage.py migrate
+
+      - name: Run Tests with Coverage
+        run: rye run coverage run --source='.' manage.py test
+
+      - name: Show Coverage Report
+        run: rye run coverage report -m
