@@ -27,9 +27,16 @@ jobs:
       - name: Install GDAL library
         run: sudo apt-get update && sudo apt-get install -y libgdal-dev
 
+      - name: Update .env file
+        run: |
+          GDAL_PATH=$(find /usr -name libgdal.so | xargs dirname)
+          GEOS_PATH=$(find /usr -name libgeos_c.so | xargs dirname)
+          sed -i "s|GDAL_LIBRARY_PATH=.*|GDAL_LIBRARY_PATH=$GDAL_PATH|g" .env
+          sed -i "s|GEOS_LIBRARY_PATH=.*|GEOS_LIBRARY_PATH=$GEOS_PATH|g" .env
+
       - name: Update ldconfig
         run: sudo ldconfig
-        
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
