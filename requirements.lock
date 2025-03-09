@@ -12,6 +12,8 @@
 -e file:.
 asgiref==3.8.1
     # via django
+coverage==7.6.12
+    # via kartoza-django
 django==5.1.7
     # via django-leaflet
     # via kartoza-django
