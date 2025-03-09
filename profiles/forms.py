@@ -24,12 +24,16 @@ class UserProfileForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the form.
+
+        If the request is passed in, and the user is not a superuser, the user field is
+        hidden.
+        """
         request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
         if request and not request.user.is_superuser:
             self.fields["user"].widget = forms.HiddenInput()
-        if self.instance.location:
-            self.fields["location"].widget.attrs["initial"] = self.instance.location
 
 
 class UserRegistrationForm(UserCreationForm):

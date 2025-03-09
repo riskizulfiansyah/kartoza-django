@@ -10,6 +10,20 @@ from profiles.models import UserProfile
 
 
 def register(request):
+    """
+    Handle user registration.
+
+    If the request method is POST, validate and register a new user using the UserRegistrationForm.
+    If the form is valid, log the user in and redirect them to their profile page.
+    If the request method is not POST, display an empty registration form.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered registration page with the form.
+    """
+
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -23,6 +37,18 @@ def register(request):
 
 @login_required
 def profile_view(request):
+    """
+    Display the user's profile.
+
+    If the user has a profile, display their profile page.
+    If the user does not have a profile, display an error message.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered profile page.
+    """
     try:
         profile = request.user.profile
     except UserProfile.DoesNotExist:
@@ -33,9 +59,22 @@ def profile_view(request):
 
 @login_required
 def edit_profile_view(request):
+    """
+    Edit the user's profile.
+
+    If the request method is POST, validate and save the user's profile data using the UserProfileForm.
+    If the form is valid, save the changes and redirect the user to their profile page.
+    If the request method is not POST, display the user's current profile data in the form.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered edit profile page with the form or an error message if the profile does not exist.
+    """
+
     try:
         profile = request.user.profile
-        print(dir(UserProfileForm))
         if request.method == "POST":
             form = UserProfileForm(request.POST, instance=profile)
             if form.is_valid():
@@ -51,6 +90,20 @@ def edit_profile_view(request):
 
 
 def map_view(request):
+    """
+    Display a map with user locations.
+
+    Query all user profiles from the database and serialize their location data.
+    Render a map with Leaflet.js and add markers for each user profile with a location.
+    The marker tooltip displays the user's username and the marker popup displays their address,
+    city, state, postal code, country, and phone number.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered map page with the user location markers.
+    """
     profiles = UserProfile.objects.all()
     locations = []
     for profile in profiles:
