@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from profiles.views import register
+from profiles.views import map_view, register
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -29,4 +29,5 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(next_page="login"), name="logout"),
     path("register/", register, name="register"),
     path("profile/", include("profiles.urls")),
+    path("map/", map_view, name="map_view"),
 ]

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div id="map"></div>
+{% endblock %}
+{% block script %}
+<script>
+    var map = L.map('map', {
+      worldCopyJump: true
+    }).setView([0, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 2,
+    }).addTo(map);
+
+    var southWest = L.latLng(-85, -Infinity);
+    var northEast = L.latLng(85, Infinity);
+    var bounds = L.latLngBounds(southWest, northEast);
+    map.setMaxBounds(bounds);  
+
+    var locations = JSON.parse('{{ locations|safe }}');
+    map.setView([locations[0].y, locations[0].x], 2);
+
+    map.on('zoomend', function() {
+        if (map.getZoom() < 2) {
+            map.setZoom(2);
+        }
+    });
+    
+    locations.forEach(function(location) {
+      var popupContent = `
+            <div class="user-popup">
+            <div class="user-popup-header">
+                <h3>${location.profile.username}</h3>
+            </div>
+            <div class="user-popup-content">
+                <div class="info-row">
+                <div class="info-label">Address:</div>
+                    <div class="info-value">${location.profile.address ?? '-'}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">City:</div>
+                    <div class="info-value">${location.profile.city ?? '-'}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">State:</div>
+                    <div class="info-value">${location.profile.state ?? '-'}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Postal Code:</div>
+                    <div class="info-value">${location.profile.postal_code ?? '-'}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Country:</div>
+                    <div class="info-value">${location.profile.country ?? '-'}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Phone:</div>
+                    <div class="info-value phone-number">${location.profile.phone_number ?? '-'}</div>
+                </div>
+            </div>
+            </div>
+        `;
+        
+        var customOptions = {
+            className: 'custom-popup',
+            maxWidth: 300
+        };
+
+        var marker = L.marker([location.y, location.x], {
+            wrapLatLng: true
+        });
+        marker.bindPopup(popupContent, customOptions);
+
+        marker.bindTooltip("<b>Longitude:</b> " + location.x + "<br><b>Latitude:</b> " + location.y);
+        marker.addTo(map);
+    });
+</script>
+{% endblock %}

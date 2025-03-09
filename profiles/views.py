@@ -1,3 +1,5 @@
+import json
+from django.forms import model_to_dict
 from django.shortcuts import redirect, render
 
 from profiles.forms import UserProfileForm, UserRegistrationForm
@@ -33,7 +35,7 @@ def profile_view(request):
 def edit_profile_view(request):
     try:
         profile = request.user.profile
-        print(dir(UserProfileForm))  # Print the attributes of UserProfileForm
+        print(dir(UserProfileForm))
         if request.method == "POST":
             form = UserProfileForm(request.POST, instance=profile)
             if form.is_valid():
@@ -46,3 +48,34 @@ def edit_profile_view(request):
             request, "edit_profile.html", {"error": "Profile does not exist."}
         )
     return render(request, "edit_profile.html", {"form": form})
+
+
+def map_view(request):
+    profiles = UserProfile.objects.all()
+    locations = []
+    for profile in profiles:
+
+        profile_dict = model_to_dict(
+            profile,
+            fields=[
+                "address",
+                "city",
+                "state",
+                "postal_code",
+                "country",
+                "phone_number",
+            ],
+        )
+
+        profile_dict["id"] = profile.user.id
+        profile_dict["username"] = profile.user.username
+
+        if profile.location:
+            location = {
+                "x": profile.location.x,
+                "y": profile.location.y,
+                "profile": profile_dict,
+            }
+            locations.append(location)
+
+    return render(request, "map.html", {"locations": json.dumps(locations)})
