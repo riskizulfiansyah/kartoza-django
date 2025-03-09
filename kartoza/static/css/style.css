@@ -1,0 +1,246 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  height: 100%;
+}
+
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h1 {
+  margin-top: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.container p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.container a {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.container a:hover {
+  background-color: #3e8e41;
+}
+
+.container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.container input[type="text"], .container input[type="password"], .container input[type="email"], .container select {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.container button[type="submit"] {
+  width: 100%;
+  height: 40px;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.container button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+/* Specific styles for each section */
+
+.profile-container {
+  width: 300px;
+}
+
+.login-container {
+  width: 300px;
+  margin: 50px auto;
+  background-color: #f9f9f9;
+}
+
+.login-form {
+  margin-top: 20px;
+}
+
+.register-container {
+  max-width: 400px;
+  text-align: center;
+}
+
+.register-container h1 {
+  margin-bottom: 20px;
+}
+
+.register-container p {
+  margin-top: 20px;
+}
+
+.register-container a {
+  color: #4CAF50;
+}
+
+.register-container a:hover {
+  color: #3e8e41;
+}
+
+.profile-form-container{
+  max-width: 400px;
+}
+
+.container button[type="submit"].logout {
+  background-color:firebrick;
+  width: auto;
+  text-align: start;
+}
+
+.container button[type="submit"].logout:hover {
+  background-color:maroon;
+  width: auto;
+  text-align: start;
+}
+
+.container a.link{
+  display:inline-block;
+  text-decoration: underline;
+  background-color: transparent;
+  color: #000;
+}
+
+.container a.register, .container a.login{
+  display: inline;
+  text-decoration: underline;
+  background-color: transparent;
+  color: #000;
+  padding: 0;
+}
+
+.container a.register:hover, .container a.login:hover, .container a.link:hover{
+  text-decoration: none;
+}
+
+.leaflet-control-attribution.leaflet-control > a{
+  display: unset;
+  background: unset;
+  padding: unset;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control > a{
+  display: unset;
+  background: unset;
+  padding: unset;
+}
+
+.leaflet-bar a{
+  background-color: #fff!important;
+}
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar{
+  border: unset!important;
+}
+
+.leaflet-touch .leaflet-bar a{
+  border: 1px solid #000;
+  padding: 0 4px!important;
+  border-bottom: 1px solid #000!important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-touch .leaflet-bar a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-touch .leaflet-bar a:last-child{
+  margin-left: 4px;
+}
+
+#map { 
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 8px 12px;
+  line-height: 1.5;
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: #fff;
+}
+
+.user-popup-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.user-popup-header i {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #3273dc;
+}
+
+.user-popup-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-popup-content {
+  font-size: 14px;
+}
+
+.user-popup-content .info-row {
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.user-popup-content .info-label {
+  font-weight: bold;
+  width: 100px;
+  color: #666;
+}
+
+.user-popup-content .info-value {
+  flex: 1;
+}
+
+.user-popup-content .phone-number {
+  color: #3273dc;
+}
